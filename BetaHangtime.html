@@ -24,37 +24,37 @@
         transition: background-color 0.3s;
       }
       #toggleButton {
-        background-color: #4caf50; /* Green */
+        background-color: #1c8b9c; /* Blue */
       }
 
       #resetButton {
-        background-color: #f44336; /* Red */
+        background-color: #fa6628; /* Red */
       }
 
       #exportButton {
-        background-color: #008cba; /* Blue */
+        background-color: #a3b1c3; /* Light Blue */
       }
 
       #copyButton {
-        background-color: #e7e7e7; /* Gray */
+        background-color: #6e727a; /* Gray */
         color: black;
       }
 
       /* For hover effect */
       #toggleButton:hover {
-        background-color: #45a049;
+        background-color: #125d69;
       }
 
       #resetButton:hover {
-        background-color: #d32f2f;
+        background-color: #c6511f;
       }
 
       #exportButton:hover {
-        background-color: #005f5f;
+        background-color: #a3b1c3;
       }
 
       #copyButton:hover {
-        background-color: #d5d5d5;
+        background-color: #4c4f54;
       }
 
       #instructions {
@@ -63,6 +63,8 @@
         left: 50%;
         transform: translate(-50%, -50%);
         padding: 20px;
+        font-size: 20px;  /* Adjust the font size */
+        color: #b3b3b3;  /* Grey color */
         background-color: rgba(255, 255, 255, 0.8);
         border-radius: 10px;
         text-align: center;
@@ -108,6 +110,16 @@
         width: 100%;
         margin-top: 0; /* Optional: adds some space above the stats */
       }
+
+      #statsText {
+        background-color: #f0f0f0; /* Light grey background */
+        font-family: 'Roboto', monospace; /* Monospace font */
+        padding: 10px; /* Padding inside the text area */
+        border: 1px solid #ccc; /* Border color */
+        border-radius: 4px; /* Rounded corners */
+        width: 50%; /* Half width minus padding */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    }
     </style>
   </head>
   <body>
@@ -226,8 +238,8 @@
           {
             label: "Left Hand (F)",
             data: [],
-            backgroundColor: "rgba(255, 99, 132, 0.2)",
-            borderColor: "rgb(255, 99, 132)",
+            backgroundColor: "rgb(142, 197, 206, 0.8)",
+            borderColor: "rgb(106, 148, 155, 0.8)",
             borderWidth: 1,
             fill: "origin",
             stepped: "true",
@@ -235,8 +247,8 @@
           {
             label: "Right Hand (J)",
             data: [],
-            backgroundColor: "rgba(255, 159, 64, 0.2)",
-            borderColor: "rgb(255, 159, 64)",
+            backgroundColor: "rgb(255, 169, 8, 0.8)",
+            borderColor: "rgb(204, 135, 6, 0.8)",
             borderWidth: 1,
             fill: "origin",
             stepped: "true",
@@ -323,8 +335,7 @@
           (leftStats.totalHoldTime + rightStats.totalHoldTime) / 1000; // Convert to seconds
 
         // Display the statistics
-        const statsText = `
-    🧗‍♀️ Movement Breakdown:
+        const statsText = `🧗‍♀️ Movement Breakdown:
       👈 Left Moves: ${leftStats.moves}
       👉 Right Moves: ${rightStats.moves}
     ⏱️ Timing Stats:
