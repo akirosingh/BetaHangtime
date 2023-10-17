@@ -1,9 +1,6 @@
 # The goal of this repo is to create a tool for annotating hangtime for climbing videos
 
 # TODOs
-
-Improvements to make:
-Copy pasteable text bracket for video
 Input video start time minute:seconds to adjust the x axis for the realtime.
 
 User experience.
