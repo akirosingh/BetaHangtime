@@ -63,8 +63,8 @@
         left: 50%;
         transform: translate(-50%, -50%);
         padding: 20px;
-        font-size: 20px;  /* Adjust the font size */
-        color: #b3b3b3;  /* Grey color */
+        font-size: 20px; /* Adjust the font size */
+        color: #b3b3b3; /* Grey color */
         background-color: rgba(255, 255, 255, 0.8);
         border-radius: 10px;
         text-align: center;
@@ -113,13 +113,13 @@
 
       #statsText {
         background-color: #f0f0f0; /* Light grey background */
-        font-family: 'Roboto', monospace; /* Monospace font */
+        font-family: "Roboto", monospace; /* Monospace font */
         padding: 10px; /* Padding inside the text area */
         border: 1px solid #ccc; /* Border color */
         border-radius: 4px; /* Rounded corners */
         width: 50%; /* Half width minus padding */
         box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    }
+      }
     </style>
   </head>
   <body>
@@ -411,7 +411,7 @@
         // Create download link and click it to initiate download
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "rawdata.csv");
+        link.setAttribute("download", "BetaHangtime_rawdata.csv");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
