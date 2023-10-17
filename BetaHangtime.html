@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BetaHangtime</title>
+    <style type="text/css"></style>
+  </head>
+  <body>
+    <button id="toggleButton" onclick="toggleStreaming()">
+      Start Recording
+    </button>
+    <button id="resetButton" onclick="resetData()">Reset</button>
+    <button id="exportButton" onclick="exportData()">Export Data</button>
+
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+    <script>
+      let isStreaming = false; // Variable to keep track of streaming state
+      let fPressed = false;
+      let jPressed = false;
+
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("keyup", handleKeyUp);
+
+      function handleKeyDown(event) {
+        console.log("Key down:", event.key);
+        if (event.key === "f" && !fPressed) {
+          myChart.data.datasets[0].data.push({ x: Date.now(), y: 1 }); // "Left Hand" to 1
+          fPressed = true;
+        } else if (event.key === "j" && !jPressed) {
+          myChart.data.datasets[1].data.push({ x: Date.now(), y: 1 }); // "Right Hand" to 1
+          jPressed = true;
+        }
+        myChart.update();
+      }
+
+      function handleKeyUp(event) {
+        console.log("Key up:", event.key);
+        if (event.key === "f") {
+          myChart.data.datasets[0].data.push({ x: Date.now(), y: 0 }); // "Left Hand" back to 0
+          fPressed = false;
+        } else if (event.key === "j") {
+          myChart.data.datasets[1].data.push({ x: Date.now(), y: 0 }); // "Right Hand" back to 0
+          jPressed = false;
+        }
+        myChart.update();
+      }
+
+      function toggleStreaming() {
+        isStreaming = !isStreaming; // Toggle the streaming state
+        myChart.options.scales.x.realtime.pause = !isStreaming; // Update the chart pause option
+        myChart.update(); // Update the chart to reflect the change
+
+        // Update the button text based on the new streaming state
+        const button = document.getElementById("toggleButton");
+        button.textContent = isStreaming ? "Stop Streaming" : "Start Streaming";
+      }
+      function resetData() {
+        // Set the data arrays of both datasets to empty arrays
+        myChart.data.datasets[0].data = [];
+        myChart.data.datasets[1].data = [];
+
+        // Update the chart to reflect the change
+        myChart.update();
+      }
+
+      // setup block
+      const data = {
+        datasets: [
+          {
+            label: "Left Hand (Press F Key)",
+            data: [],
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgb(255, 99, 132)",
+            borderWidth: 1,
+            fill: "origin",
+            stepped: "true",
+          },
+          {
+            label: "Right Hand (Press J Key)",
+            data: [],
+            backgroundColor: "rgba(255, 159, 64, 0.2)",
+            borderColor: "rgb(255, 159, 64)",
+            borderWidth: 1,
+            fill: "origin",
+            stepped: "true",
+          },
+        ],
+      };
+      // config black
+      const config = {
+        type: "line",
+        data,
+        options: {
+          plugins: {
+            streaming: {
+              ttl: 3600000,
+            },
+          },
+          interaction: {
+            intersect: false,
+          },
+          scales: {
+            x: {
+              type: "realtime",
+              realtime: {
+                pause: true,
+                onRefresh: (chart) => {
+                  chart.data.datasets.forEach((dataset) => {});
+                },
+              },
+            },
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      };
+
+      function exportData() {
+        // Get the datasets from the chart
+        const leftHandData = myChart.data.datasets[0].data;
+        const rightHandData = myChart.data.datasets[1].data;
+
+        function formatTime(date) {
+          // Format the date object to a time string (HH:mm:ss) using the user's local time zone
+          const timeString = date.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+          });
+
+          // Get the milliseconds component of the date object, padded with zeros to three digits
+          const ms = date.getMilliseconds().toString().padStart(3, "0");
+
+          // Concatenate the time string and milliseconds string with a period in between
+          return `${timeString}.${ms}`;
+        }
+
+        // Create CSV content
+        let csvContent =
+          "data:text/csv;charset=utf-8,Time,Left Hand,Right Hand\n";
+
+        let i = 0,
+          j = 0;
+        let leftValue = 0,
+          rightValue = 0; // Initialize the values outside the loop
+        while (i < leftHandData.length || j < rightHandData.length) {
+          const leftEvent = leftHandData[i] || { x: Infinity };
+          const rightEvent = rightHandData[j] || { x: Infinity };
+
+          let currentTimestamp;
+          if (leftEvent.x <= rightEvent.x) {
+            currentTimestamp = new Date(leftEvent.x);
+            leftValue = leftEvent.y; // Update the value only when a new event is processed
+            i++;
+          } else {
+            currentTimestamp = new Date(rightEvent.x);
+            rightValue = rightEvent.y; // Update the value only when a new event is processed
+            j++;
+          }
+
+          const formattedTime = formatTime(currentTimestamp);
+          csvContent += `${formattedTime},${leftValue},${rightValue}\n`;
+        }
+
+        // Encode CSV content
+        const encodedUri = encodeURI(csvContent);
+
+        // Create download link and click it to initiate download
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "rawdata.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      // render init block
+      const myChart = new Chart(document.getElementById("myChart"), config);
+    </script>
+  </body>
+</html>
