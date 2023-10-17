@@ -3,7 +3,6 @@
 # TODOs
 
 Improvements to make:
-Scroll horizontally after pausing recording.
 Copy pasteable text bracket for video
 Input video start time minute:seconds to adjust the x axis for the realtime.
 
