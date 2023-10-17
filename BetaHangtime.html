@@ -5,37 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BetaHangtime</title>
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤙</text></svg>"
     />
     <style type="text/css">
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #008cba; /* Blue color */
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      #toggleButton {
+        background-color: #4caf50; /* Green */
+      }
+
+      #resetButton {
+        background-color: #f44336; /* Red */
+      }
+
+      #exportButton {
+        background-color: #008cba; /* Blue */
+      }
+
+      #copyButton {
+        background-color: #e7e7e7; /* Gray */
+        color: black;
+      }
+
+      /* For hover effect */
+      #toggleButton:hover {
+        background-color: #45a049;
+      }
+
+      #resetButton:hover {
+        background-color: #d32f2f;
+      }
+
+      #exportButton:hover {
+        background-color: #005f5f;
+      }
+
+      #copyButton:hover {
+        background-color: #d5d5d5;
+      }
+
+      #instructions {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        text-align: center;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
       #canvas-container {
         position: relative;
         width: 100%;
         height: 80vh;
+        margin-bottom: 0; /* Optional: adds some space below the chart */
+      }
+
+      #button-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 20px; /* Optional: creates some space below the buttons */
+        gap: 10px;
+      }
+
+      #left-placeholder {
+        flex-grow: 1;
+      }
+
+      #right-buttons {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+
+      #stats {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 0; /* Optional: adds some space above the stats */
       }
     </style>
   </head>
   <body>
-    <button id="toggleButton" onclick="toggleStreaming()">
-      Start Recording
-    </button>
-    <button id="resetButton" onclick="resetData()">Reset</button>
-    <button id="exportButton" onclick="exportData()">Export Data</button>
+    <div id="instructions">
+      Press and hold the <strong>F</strong> key (Left Hand) and
+      <strong>J</strong> key (Right Hand) to record movements.
+    </div>
+    <div id="button-container">
+      <div id="left-placeholder"></div>
+      <button id="toggleButton" onclick="toggleStreaming()">
+        <i class="fas fa-record-vinyl"></i> Start Recording
+      </button>
+      <div id="right-buttons">
+        <button id="resetButton" onclick="resetData()">
+          <i class="fas fa-redo"></i> Reset
+        </button>
+        <button id="exportButton" onclick="exportData()">
+          <i class="fas fa-download"></i> Export Data
+        </button>
+      </div>
+    </div>
+    <style type="text/css">
+      #stats {
+        display: none;
+      }
+      #resetButton,
+      #exportButton {
+        display: none; /* Hide the buttons initially */
+      }
+    </style>
 
     <div id="canvas-container">
       <canvas id="myChart"></canvas>
     </div>
 
-    <style type="text/css">
-      #stats {
-        display: none;
-      }
-    </style>
-
     <div id="stats">
       <textarea id="statsText" rows="5" cols="50" readonly></textarea>
-      <button onclick="copyStats()">Copy</button>
+      <button onclick="copyStats()"><i class="fas fa-copy"></i> Copy</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
@@ -79,12 +189,22 @@
       function toggleStreaming() {
         isStreaming = !isStreaming;
         myChart.options.scales.x.realtime.pause = !isStreaming;
+        const resetButton = document.getElementById("resetButton");
+        const exportButton = document.getElementById("exportButton");
+        const instructions = document.getElementById("instructions"); // Get the instructions div
+
         if (isStreaming) {
           myChart.resetZoom();
           document.getElementById("stats").style.display = "none"; // Hide the stats div
+          resetButton.style.display = "none"; // Hide the reset button
+          exportButton.style.display = "none"; // Hide the export button
+          instructions.style.display = "none"; // Hide the instructions
         } else {
           calculateAndDisplayStats();
-          document.getElementById("stats").style.display = "block"; // Show the stats div
+          document.getElementById("stats").style.display = "flex"; // Show the stats div
+          resetButton.style.display = "inline-block"; // Show the reset button
+          exportButton.style.display = "inline-block"; // Show the export button
+          instructions.style.display = "block"; // Show the instructions
         }
         myChart.update();
         const button = document.getElementById("toggleButton");
@@ -104,7 +224,7 @@
       const data = {
         datasets: [
           {
-            label: "Left Hand (Press F Key)",
+            label: "Left Hand (F)",
             data: [],
             backgroundColor: "rgba(255, 99, 132, 0.2)",
             borderColor: "rgb(255, 99, 132)",
@@ -113,7 +233,7 @@
             stepped: "true",
           },
           {
-            label: "Right Hand (Press J Key)",
+            label: "Right Hand (J)",
             data: [],
             backgroundColor: "rgba(255, 159, 64, 0.2)",
             borderColor: "rgb(255, 159, 64)",
@@ -210,7 +330,9 @@
     ⏱️ Timing Stats:
       ⌚ Avg. Hold Time: ${averageHoldTime.toFixed(2)} sec
       ⛽ Longest Hold Time: ${longestHoldTime.toFixed(2)} sec
-      🙌 Time Under Tension: ${Math.floor(totalHoldTime / 60)} min, ${(totalHoldTime % 60).toFixed(2)} sec
+      🙌 Time Under Tension: ${Math.floor(totalHoldTime / 60)} min, ${(
+          totalHoldTime % 60
+        ).toFixed(2)} sec
       🤜 Left Hand: ${leftStats.totalHoldTime / 1000} sec
       🤛 Right Hand: ${rightStats.totalHoldTime / 1000} sec
     📊 Stats Courtesy: 🤙BetaHangtime

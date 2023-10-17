@@ -2,18 +2,4 @@
 
 # TODOs
 Input video start time minute:seconds to adjust the x axis for the realtime.
-
-User experience.
-
-1. Alternate Pressing fj with lefthand and right hand.
-2. Press spacebar to quit recording
-3. Summary Statistics:
-
-X Left hand moves, Y Right hand moves
-Average time per hold: seconds
-Longest hold time: X or Y (min:sec), time in seconds
-Total time under tension: minutes, seconds
-Statistics provided by BetaHangtime
-
-4. Export CSV button
-5. Reset button
+Record a tutorial youtube video
