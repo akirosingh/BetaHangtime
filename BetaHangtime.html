@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BetaHangtime</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤙</text></svg>">
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤙</text></svg>"
+    />
     <style type="text/css">
       #canvas-container {
         position: relative;
@@ -26,15 +29,14 @@
 
     <style type="text/css">
       #stats {
-          display: none;
+        display: none;
       }
-  </style>
-  
-  <div id="stats">
+    </style>
+
+    <div id="stats">
       <textarea id="statsText" rows="5" cols="50" readonly></textarea>
       <button onclick="copyStats()">Copy</button>
-  </div>
-  
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
@@ -75,19 +77,19 @@
       }
 
       function toggleStreaming() {
-    isStreaming = !isStreaming;
-    myChart.options.scales.x.realtime.pause = !isStreaming;
-    if (isStreaming) {
-        myChart.resetZoom();
-        document.getElementById('stats').style.display = 'none';  // Hide the stats div
-    } else {
-        calculateAndDisplayStats();
-        document.getElementById('stats').style.display = 'block';  // Show the stats div
-    }
-    myChart.update();
-    const button = document.getElementById("toggleButton");
-    button.textContent = isStreaming ? "Stop Recording" : "Start Recording";
-}
+        isStreaming = !isStreaming;
+        myChart.options.scales.x.realtime.pause = !isStreaming;
+        if (isStreaming) {
+          myChart.resetZoom();
+          document.getElementById("stats").style.display = "none"; // Hide the stats div
+        } else {
+          calculateAndDisplayStats();
+          document.getElementById("stats").style.display = "block"; // Show the stats div
+        }
+        myChart.update();
+        const button = document.getElementById("toggleButton");
+        button.textContent = isStreaming ? "Stop Recording" : "Start Recording";
+      }
 
       function resetData() {
         // Set the data arrays of both datasets to empty arrays
@@ -146,73 +148,81 @@
                   enabled: true,
                 },
               },
-              },
-            },
-            interaction: {
-              intersect: false,
-            },
-            scales: {
-              x: {
-                type: "realtime",
-                realtime: {
-                  pause: true,
-                  onRefresh: (chart) => {
-                    chart.data.datasets.forEach((dataset) => {});
-                  },
-                },
-              },
-              y: {
-                beginAtZero: true,
-              },
             },
           },
-        };
+          interaction: {
+            intersect: false,
+          },
+          scales: {
+            x: {
+              type: "realtime",
+              realtime: {
+                pause: true,
+                onRefresh: (chart) => {
+                  chart.data.datasets.forEach((dataset) => {});
+                },
+              },
+            },
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      };
 
-        function calculateAndDisplayStats() {
-    const leftHandData = myChart.data.datasets[0].data;
-    const rightHandData = myChart.data.datasets[1].data;
+      function calculateAndDisplayStats() {
+        const leftHandData = myChart.data.datasets[0].data;
+        const rightHandData = myChart.data.datasets[1].data;
 
-    // Function to calculate statistics
-    function calculateStats(data) {
-        let moves = 0;
-        let totalHoldTime = 0;
-        let longestHoldTime = 0;
-        for (let i = 1; i < data.length; i += 2) {  // Assumes data starts with a press event
+        // Function to calculate statistics
+        function calculateStats(data) {
+          let moves = 0;
+          let totalHoldTime = 0;
+          let longestHoldTime = 0;
+          for (let i = 1; i < data.length; i += 2) {
+            // Assumes data starts with a press event
             const holdTime = data[i].x - data[i - 1].x;
             totalHoldTime += holdTime;
             longestHoldTime = Math.max(longestHoldTime, holdTime);
             moves++;
+          }
+          return { moves, totalHoldTime, longestHoldTime };
         }
-        return { moves, totalHoldTime, longestHoldTime };
-    }
 
-    const leftStats = calculateStats(leftHandData);
-    const rightStats = calculateStats(rightHandData);
+        const leftStats = calculateStats(leftHandData);
+        const rightStats = calculateStats(rightHandData);
 
-    const totalMoves = leftStats.moves + rightStats.moves;
-    const averageHoldTime = (leftStats.totalHoldTime + rightStats.totalHoldTime) / (totalMoves*1000);
-    const longestHoldTime = Math.max(leftStats.longestHoldTime, rightStats.longestHoldTime)/1000;
-    const totalHoldTime = (leftStats.totalHoldTime + rightStats.totalHoldTime) / 1000;  // Convert to seconds
+        const totalMoves = leftStats.moves + rightStats.moves;
+        const averageHoldTime =
+          (leftStats.totalHoldTime + rightStats.totalHoldTime) /
+          (totalMoves * 1000);
+        const longestHoldTime =
+          Math.max(leftStats.longestHoldTime, rightStats.longestHoldTime) /
+          1000;
+        const totalHoldTime =
+          (leftStats.totalHoldTime + rightStats.totalHoldTime) / 1000; // Convert to seconds
 
-    // Display the statistics
-    const statsText = `
-        ${leftStats.moves} 👈 moves, ${rightStats.moves} 👉 moves
-        Average time per hold: ${averageHoldTime.toFixed(2)} seconds
-        Longest hold time: ${longestHoldTime.toFixed(2)} seconds
-        Total time under tension: 
-        ${Math.floor(totalHoldTime / 60)} minutes, ${(totalHoldTime % 60).toFixed(2)} seconds
-        Statistics provided by 🤙BetaHangtime
+        // Display the statistics
+        const statsText = `
+    🧗‍♀️ Movement Breakdown:
+      👈 Left Moves: ${leftStats.moves}
+      👉 Right Moves: ${rightStats.moves}
+    ⏱️ Timing Stats:
+      ⌚ Avg. Hold Time: ${averageHoldTime.toFixed(2)} sec
+      ⛽ Longest Hold Time: ${longestHoldTime.toFixed(2)} sec
+      🙌 Time Under Tension: ${Math.floor(totalHoldTime / 60)} min, ${(totalHoldTime % 60).toFixed(2)} sec
+      🤜 Left Hand: ${leftStats.totalHoldTime / 1000} sec
+      🤛 Right Hand: ${rightStats.totalHoldTime / 1000} sec
+    📊 Stats Courtesy: 🤙BetaHangtime
     `;
-    document.getElementById('statsText').value = statsText;
-}
+        document.getElementById("statsText").value = statsText;
+      }
 
-function copyStats() {
-    const textarea = document.getElementById('statsText');
-    textarea.select();
-    document.execCommand('copy');
-}
-
-
+      function copyStats() {
+        const textarea = document.getElementById("statsText");
+        textarea.select();
+        document.execCommand("copy");
+      }
 
       function exportData() {
         // Get the datasets from the chart
