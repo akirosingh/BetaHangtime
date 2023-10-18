@@ -11,7 +11,7 @@ BetaHangtime is a web application that allows users to analyze rock climbing vid
 - [Contributing](#contributing)
 
 ## Demo
-[betahangtime.askadam.me](betahangtime.askadam.me)  
+[betahangtime.askadam.me](https://betahangtime.askadam.me)  
 ![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
 
 ## Features
@@ -21,7 +21,7 @@ BetaHangtime is a web application that allows users to analyze rock climbing vid
 - Export timeseries data to CSV for further analysis
 
 ## Usage
-1. Open the app at [betahangtime.askadam.me](betahangtime.askadam.me)
+1. Open the app at [betahangtime.askadam.me](https://betahangtime.askadam.me)
 2. Set up window next to a window of a climbing video
 3. Start the climbing video
 4. Start Recording
