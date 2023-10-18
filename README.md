@@ -1,6 +1,6 @@
 # BetaHangtime
 
-BetaHangtime is a web application that allows users to analyze rock climbing videos by recording and analyze their keystrokes as a proxy for hand movements over time. By pressing and holding F (Left Hand) and J (Right hand), users can track their movements and obtain statistics on rock climbs they care about.
+BetaHangtime is a web application that allows users to analyze rock climbing videos by recording and analyzing their keystrokes as a proxy for hand movements over time. By pressing and holding F (Left Hand) and J (Right hand), users can track their movements and obtain statistics on rock climbs they care about.
 
 ## Table of Contents
 - [Demo](#demo)
