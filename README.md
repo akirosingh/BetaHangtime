@@ -6,12 +6,13 @@ BetaHangtime is a web application that allows users to analyze rock climbing vid
 - [Demo](#demo)
 - [Features](#features)
 - [Usage](#usage)
+- [Tips](#tips)
 - [Support](#support)
 - [Contributing](#contributing)
 
 ## Demo
-betahangtime.askadam.me
-
+[betahangtime.askadam.me](betahangtime.askadam.me)
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
 
 ## Features
 - Real-time movement tracking
@@ -20,7 +21,7 @@ betahangtime.askadam.me
 - Export timeseries data to CSV for further analysis
 
 ## Usage
-1. Open the app at betahangtime.askadam.me
+1. Open the app at [betahangtime.askadam.me](betahangtime.askadam.me)
 2. Set up window next to a window of a climbing video
 3. Start the climbing video
 4. Start Recording
@@ -28,6 +29,11 @@ betahangtime.askadam.me
 6. Stop recording
 7. If satisfied with the quality, post statistics into comments
 8. Export data for future reference
+
+## Tips
+- There is a learning curve to this. Try on a short video first.
+- Predicting climbing movement can be tricky, having two climbing windows open with one a little ahead can help
+- Reaction time is about 0.2 seconds so differences that are smaller might not be relevant
 
 ## Support
 For any queries or support, please email me at kirosingh@gmail.com or raise an issue on GitHub
