@@ -124,7 +124,7 @@
   </head>
   <body>
     <div id="instructions">
-      Press and hold the <strong>F</strong> key (Left Hand) and
+      <strong>Press and hold</strong> the <strong>F</strong> key (Left Hand) and
       <strong>J</strong> key (Right Hand) to record movements.
     </div>
     <div id="button-container">
@@ -216,7 +216,7 @@
           document.getElementById("stats").style.display = "flex"; // Show the stats div
           resetButton.style.display = "inline-block"; // Show the reset button
           exportButton.style.display = "inline-block"; // Show the export button
-          instructions.style.display = "block"; // Show the instructions
+          //instructions.style.display = "block"; // Show the instructions
         }
         myChart.update();
         const button = document.getElementById("toggleButton");
@@ -274,10 +274,10 @@
               },
               zoom: {
                 wheel: {
-                  enabled: false,
+                  enabled: true,
                 },
                 pinch: {
-                  enabled: true,
+                  enabled: false,
                 },
               },
             },
