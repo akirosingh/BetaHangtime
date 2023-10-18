@@ -13,6 +13,13 @@
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤙</text></svg>"
     />
     <style type="text/css">
+      #top-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 10px; 
+      }
       button {
         padding: 10px 20px;
         border: none;
@@ -77,19 +84,26 @@
         height: 100vh;
         margin: 0;
       }
+      @media (max-width: 600px) {
+    /* Styles for screens less than or equal to 600px wide */
+    #button-container {
+      flex-direction: column;  /* Stack buttons vertically on small screens */
+      align-items: center;
+    }
+  }
 
       #canvas-container {
         position: relative;
         width: 100%;
-        height: 80vh;
-        margin-bottom: 0; /* Optional: adds some space below the chart */
+        height: 70%;
       }
 
       #button-container {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         width: 100%;
-        margin-bottom: 20px; /* Optional: creates some space below the buttons */
+        margin-bottom: 10px; /* Optional: creates some space below the buttons */
         gap: 10px;
       }
 
@@ -127,18 +141,24 @@
       <strong>Press and hold</strong> the <strong>F</strong> key (Left Hand) and
       <strong>J</strong> key (Right Hand) to record movements.
     </div>
-    <div id="button-container">
-      <div id="left-placeholder"></div>
-      <button id="toggleButton" onclick="toggleStreaming()">
-        <i class="fas fa-record-vinyl"></i> Start Recording
-      </button>
-      <div id="right-buttons">
-        <button id="resetButton" onclick="resetData()">
-          <i class="fas fa-redo"></i> Reset
+    <div id="top-container">
+      <div id="button-container">
+        <div id="left-placeholder"></div>
+        <button id="toggleButton" onclick="toggleStreaming()">
+          <i class="fas fa-record-vinyl"></i> Start Recording
         </button>
-        <button id="exportButton" onclick="exportData()">
-          <i class="fas fa-download"></i> Export Data
-        </button>
+        <div id="right-buttons">
+          <button id="resetButton" onclick="resetData()">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+          <button id="exportButton" onclick="exportData()">
+            <i class="fas fa-download"></i> Export Data
+          </button>
+        </div>
+      </div>
+      <div id="stats">
+        <textarea id="statsText" rows="5" cols="50" readonly></textarea>
+        <button onclick="copyStats()"><i class="fas fa-copy"></i> Copy</button>
       </div>
     </div>
     <style type="text/css">
@@ -153,11 +173,6 @@
 
     <div id="canvas-container">
       <canvas id="myChart"></canvas>
-    </div>
-
-    <div id="stats">
-      <textarea id="statsText" rows="5" cols="50" readonly></textarea>
-      <button onclick="copyStats()"><i class="fas fa-copy"></i> Copy</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
