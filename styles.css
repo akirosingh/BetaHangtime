@@ -1,0 +1,116 @@
+#top-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #008cba; /* Blue color */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#toggleButton {
+  background-color: #1c8b9c; /* Blue */
+}
+
+#resetButton {
+  background-color: #fa6628; /* Red */
+  display: none;
+}
+
+#exportButton {
+  background-color: #a3b1c3; /* Light Blue */
+  display: none;
+}
+
+#copyButton {
+  background-color: #6e727a; /* Gray */
+  color: black;
+}
+
+/* For hover effect */
+#toggleButton:hover {
+  background-color: #125d69;
+}
+
+#resetButton:hover {
+  background-color: #c6511f;
+}
+
+#exportButton:hover {
+  background-color: #a3b1c3;
+}
+
+#copyButton:hover {
+  background-color: #4c4f54;
+}
+
+#instructions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  font-size: 20px; /* Adjust the font size */
+  color: #b3b3b3; /* Grey color */
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  text-align: center;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#canvas-container {
+  position: relative;
+  width: 100%;
+  height: 70%;
+}
+
+#button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px; /* Optional: creates some space below the buttons */
+  gap: 10px;
+}
+
+#left-placeholder {
+  flex-grow: 1;
+}
+
+#right-buttons {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+#stats {
+  display: none;
+  justify-content: center;
+  width: 100%;
+  margin-top: 0; /* Optional: adds some space above the stats */
+}
+
+#statsText {
+  background-color: #f0f0f0; /* Light grey background */
+  font-family: "Roboto", monospace; /* Monospace font */
+  padding: 10px; /* Padding inside the text area */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  width: 50%; /* Half width minus padding */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
