@@ -31,8 +31,9 @@ BetaHangtime is a web application that allows users to analyze rock climbing vid
 8. Export data for future reference
 
 ## Tips
+- Pulling on with both hands counts as two moves whereas typically the first move is usually talked about as after establishing on the start.
 - There is a learning curve to this. Try on a short video first.
-- Predicting climbing movement can be tricky, having two climbing windows open with one a little ahead can help
+- Predicting climbing movement can be tricky, having two climbing windows open with one a little ahead can help but I've found the framerate can drop
 - Reaction time is about 0.2 seconds so differences that are smaller might not be relevant
 
 ## Support
