@@ -12,7 +12,7 @@ BetaHangtime is a web application that allows users to analyze rock climbing vid
 
 ## Demo
 [betahangtime.askadam.me](https://betahangtime.askadam.me)  
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Alt text](bod_analysis-1.gif)
 
 ## Features
 - Real-time movement tracking
