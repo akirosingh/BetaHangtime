@@ -164,19 +164,23 @@ function calculateAndDisplayStats() {
     Math.max(leftStats.longestHoldTime, rightStats.longestHoldTime) / 1000;
   const totalHoldTime =
     (leftStats.totalHoldTime + rightStats.totalHoldTime) / 1000; // Convert to seconds
+  const leftHoldtime = 
+    (leftStats.totalHoldTime / 1000);
+  const rightHoldtime = 
+    (rightStats.totalHoldTime / 1000);
 
   // Display the statistics
   const statsText = `🧗‍♀️ Movement Breakdown:
       👈 Left Moves: ${leftStats.moves}
       👉 Right Moves: ${rightStats.moves}
     ⏱️ Timing Stats:
-      ⌚ Avg. Hold Time: ${averageHoldTime.toFixed(2)} sec
-      ⛽ Longest Hold Time: ${longestHoldTime.toFixed(2)} sec
+      ⌚ Avg. Hold Time: ${averageHoldTime.toFixed(1)} sec
+      ⛽ Longest Hold Time: ${longestHoldTime.toFixed(1)} sec
       🙌 Time Under Tension: ${Math.floor(totalHoldTime / 60)} min, ${(
     totalHoldTime % 60
-  ).toFixed(2)} sec
-      🤜 Left Hand: ${leftStats.totalHoldTime / 1000} sec
-      🤛 Right Hand: ${rightStats.totalHoldTime / 1000} sec
+  ).toFixed(1)} sec
+      🤜 Left Hand: ${leftHoldtime.toFixed(1)} sec
+      🤛 Right Hand: ${rightHoldtime.toFixed(1)} sec
     📊 Stats Courtesy: 🤙BetaHangtime`;
   document.getElementById("statsText").value = statsText;
 }
